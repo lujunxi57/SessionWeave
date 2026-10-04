@@ -1,29 +1,48 @@
-# SessionWeave
+<p align="center">
+  <img src=".github/assets/logo.svg" width="72" alt="SessionWeave logo" />
+</p>
 
-把真实 Codex CLI / OpenCode TUI 会话编排为可执行的网页工作流。
+<h1 align="center">SessionWeave</h1>
 
-SessionWeave 将已有会话作为资源，将每个画布节点作为一次执行步骤。A → B → 同一个 A 的接力保留原生会话上下文，并把本次运行的最终回答传给下游。
+<p align="center"><strong>Turn your Codex and OpenCode sessions into visual workflows.</strong></p>
+<p align="center">Reuse native conversation context across steps, pass final outputs between sessions, and inspect each handoff.</p>
 
-## 功能
+<p align="center">
+  <strong>Early Demo</strong> · Codex CLI + OpenCode TUI · Validated on Linux / Node.js 22<br />
+  English · <a href="README.zh-CN.md">简体中文</a><br />
+  <a href="#core-mechanics">How it works</a> · <a href="#quick-start">Quick start</a> · <a href="#current-limits-and-data-flow">Current limits</a>
+</p>
 
-- **真实会话**：发现已有 Codex / OpenCode 会话，按最近活动排序，支持标题与预览搜索、时间范围和 Harness 筛选。
-- **可视化编排**：拖入会话、连接步骤，使用 `{{A1.output}}` 引用本次运行的上游最终回答。
-- **自然语言规划**：先生成可编辑的文字方案，确认后转为画布；点击运行才向业务会话派发任务。
-- **原生配置**：业务步骤沿用会话当前模型与思考档位，支持原生 Skill、文件附件和模型选择。
-- **执行与记录**：监听原客户端的在途任务、等待忙碌会话、暂停后续派发，并查看实际输入、最终输出和错误。
-- **像素员工**：一个会话对应一个员工，一个步骤对应一个工位；A → B → A 是两个员工、三个工位，结果沿连线接力。
+![SessionWeave live desktop workbench: native sessions, a three-step canvas, and the planning panel](.github/assets/workbench.jpg)
 
-## 环境要求
+<p align="center"><sub>Captured directly from the running web app. This prepared workflow is waiting to run; its workstation graphics show the ready state.</sub></p>
 
-当前版本是面向单台主机的早期 Demo，已在 Linux + Node.js 22 环境验证。
+## Core mechanics
 
-- Node.js 22 和 npm。
-- 已登录、可通过共享 app-server daemon 连接的 Codex CLI。
-- 已运行的 OpenCode 2.x 服务，以及可读取的服务配置文件。
-- 自然语言规划和接力润色使用独立的 OpenCode `space-bunny-free` 辅助会话，需要该模型在当前服务中可用。
-- 会话中的业务任务使用各自 Harness 已配置的模型；本项目不提供模型服务或认证凭证。
+Keep the conversations you already use and make their handoffs explicit on a canvas.
 
-## 启动
+![Two native sessions, three steps: OpenCode A researches, Codex B reviews, and the same OpenCode A revises](.github/assets/workflow.svg)
+
+| Concept | What it means |
+| --- | --- |
+| **Session** | An existing native Codex or OpenCode conversation, with its own history and model configuration. |
+| **Step** | One task on the canvas. Multiple steps can reuse the same session. |
+| **Handoff** | A snapshot of the final assistant answer from an upstream step in the current run, referenced as `{{A1.output}}`. Tool messages and reasoning are excluded. |
+
+For example, **OpenCode A → Codex B → the same OpenCode A** can research, review, and revise. A1 and A3 retain A's native context; B receives A1's final answer. This is a three-step DAG, with two sessions and three workstations.
+
+## Quick start
+
+### Prerequisites
+
+The current demo connects to services on **one host**. Have these ready before starting:
+
+- **Node.js 22** and npm.
+- An authenticated **Codex CLI**, accessible through its shared app-server daemon.
+- A running **OpenCode 2.x** service and a readable service configuration JSON file.
+- Your business sessions' models configured and authenticated in their native clients.
+
+> **Two separate model paths:** workflow steps use each native session's model and reasoning effort. Natural-language planning and optional handoff polishing use independent OpenCode helper sessions with the currently hardcoded `opencode/space-bunny-free` model. This helper model must be available in your OpenCode service.
 
 ```bash
 git clone git@github.com:lujunxi57/SessionWeave.git
@@ -32,74 +51,82 @@ npm ci
 npm run dev
 ```
 
-打开 **http://127.0.0.1:8787**。仓库访问需要相应的 GitHub 权限。
+Open **http://127.0.0.1:8787**. Repository access currently requires GitHub permission.
 
-生产模式：
+For production mode:
 
 ```bash
 npm run build
 npm start
 ```
 
-应用默认仅监听 localhost。运行在 SSH 主机时，可在本机建立端口转发：
+When the services run on an SSH host, forward the web port from your local machine:
 
 ```bash
 ssh -N -L 8787:127.0.0.1:8787 <your-ssh-host>
 ```
 
-### 连接配置
+### Your first workflow
 
-| 环境变量 | 用途 | 默认值或发现方式 |
+1. Drag existing sessions from the left sidebar onto the canvas, or select two sessions and use **A → B → A**.
+2. Edit the purpose and prompt for each step; connect steps and reference upstream final outputs.
+3. Alternatively, select participating sessions and describe the collaboration in the planning panel. Review the editable text plan before confirming the canvas.
+4. Click **Run** to dispatch business tasks. Inspect step states, actual inputs, final outputs, and errors in the run records.
+
+Creating or editing a canvas does not dispatch business tasks. Generating a text plan does call the independent planning model.
+
+## Capabilities
+
+| Capability | Current behavior |
+| --- | --- |
+| **Discover native sessions** | Browse Codex and OpenCode conversations, sort by recent activity, and filter by title/preview, time range, and harness. |
+| **Plan and edit visually** | Build workflows manually or convert an editable natural-language plan into steps and connections. |
+| **Keep native configuration** | Use native Skills and file attachments. Select models and reasoning effort from the harness's available catalog. Model changes affect the whole session; busy sessions cannot be changed. |
+| **Listen and queue** | Observe an in-flight round started in the original client, wait for busy sessions, and pause later dispatches. |
+| **Inspect execution** | Review the input actually sent, final-output snapshots, status changes, and errors for each run. |
+| **See sessions as employees** | One session maps to one pixel employee and each step to a workstation. Movement, typing, approval waits, failures, and output handoffs follow execution state. The overlay is optional and respects reduced motion. |
+
+## Connection configuration
+
+| Environment variable | Purpose | Default / discovery |
 | --- | --- | --- |
-| `CODEX_SOCKET` | Codex 共享 daemon socket 路径 | 从 `codex app-server daemon version` 发现 |
-| `OPENCODE_URL` | OpenCode 服务地址 | `http://127.0.0.1:49374` |
-| `OPENCODE_SERVICE_FILE` | OpenCode 服务配置文件 | `~/.config/opencode/service.json` |
-| `OPENCODE_SERVER_PASSWORD` | 覆盖 OpenCode 服务密码 | 从服务配置读取 |
-| `PORT` | 网页服务端口 | `8787` |
+| `CODEX_SOCKET` | Shared Codex daemon socket | Discovered with `codex app-server daemon version` |
+| `OPENCODE_URL` | OpenCode service URL | `http://127.0.0.1:49374` |
+| `OPENCODE_SERVICE_FILE` | OpenCode service configuration | `~/.config/opencode/service.json` |
+| `OPENCODE_SERVER_PASSWORD` | Override OpenCode service password | Read from the service configuration |
+| `PORT` | Web server port | `8787` |
 
-当前 OpenCode 适配器始终读取服务配置文件；即使使用环境变量覆盖地址或密码，也需要一个可读取的 JSON 配置文件。凭证仅由后端读取，不发送到浏览器。
+The current OpenCode adapter always reads the configuration file, including its `password` field. A readable JSON file is required even when URL/password environment overrides are supplied. Service credentials are read by the backend and are not sent to the browser.
 
-## 使用
+## Current limits and data flow
 
-1. 从左侧拖入已有会话，或勾选参与规划的会话。
-2. 在右侧描述协作任务、选择 Skill，生成并检查文字方案。
-3. 确认画布，编辑各步骤的提示词与上游输出引用。
-4. 点击运行，查看各步骤状态及运行记录。
+- **Early, single-host demo.** Current integrations are Codex and OpenCode; Linux with Node.js 22 is the validated environment.
+- **Native clients remain part of the workflow.** Handle permission approvals, full terminal interaction, and client-specific management commands in the original CLI/TUI. The web app shows approval waits.
+- **Finite workflows.** Pause prevents later dispatches while in-flight tasks continue. Mid-run graph changes, immediate interruption, and general loops are not implemented.
+- **Partial editor parity.** Skill completion, input history, file attachments, and output references are supported. Full file/agent `@` menus, Shell mode, and snippets are not implemented. Search covers titles and previews, not full conversation text.
+- **Local records, provider-backed inference.** Workflow/run records are stored in `.sessionweave/`. Browser closure does not stop the backend. A backend restart preserves snapshots and marks unfinished runs as failed; it does not replay them automatically. Inputs and upstream final outputs reach models through the configured native harnesses and their providers, including the helper model when planning/polishing is used.
+- **State-driven pixel animation.** The overlay represents execution states; it does not yet distinguish individual file-read, edit, or test tool actions.
 
-例如：OpenCode A 实现功能 → Codex B 审查代码 → 同一个 OpenCode A 修复并验证。A1 和 A3 引用同一会话，但拥有不同步骤 ID；这是三步接力，不是无限循环。
-
-模型选择作用于原生会话。点击节点的模型按钮后，可搜索模型、调整原生思考档位，点击外部保存；运行中的会话不能切换。
-
-## 验证
+## Development
 
 ```bash
 npm test
 npm run build
 ```
 
-单元测试使用模拟适配器，覆盖调度、最终回答归属、模型继承和像素状态，不向真实 Harness 发送任务。
+Unit tests use mock adapters for scheduling, final-answer ownership, model inheritance, and pixel states; they do not send tasks to real harnesses.
 
-像素界面检查需要先启动网页服务并安装 Playwright Chromium：
+The optional pixel UI check requires a running web server and Playwright Chromium:
 
 ```bash
 npx playwright install chromium
 npm run test:browser
 ```
 
-可通过 `DEMO_URL` 指定检查地址。浏览器检查拦截 API，仅使用模拟会话和运行状态，不修改真实会话、模型或已保存的流程。默认不生成截图或报告；仅在设置 `ARTIFACT_DIR` 时保存检查产物。
+`DEMO_URL` overrides the check URL. This check intercepts APIs and uses mock sessions/run states. It does not modify native sessions, models, or saved workflows. No screenshots or reports are written by default; set `ARTIFACT_DIR` to retain check artifacts.
 
-## 当前边界
+Built with **React, TypeScript, React Flow, CodeMirror, and Fastify**, using native protocols to connect Codex and OpenCode.
 
-- 当前仅接入 Codex 与 OpenCode；完整终端嵌入和客户端专属管理命令仍需在原客户端操作。
-- Skill 补全、历史输入导航、文件附件与输出引用可用；文件/agent 的完整 `@` 菜单、Shell 模式与 snippet 尚未实现。
-- 权限审批在原客户端处理，网页显示等待状态。
-- 暂停只阻止后续派发，在途任务继续；不支持即时插话、运行中改图或通用循环。
-- 数据保存在本地 `.sessionweave/`。关闭浏览器不影响后端执行；后端重启后保留快照并停止未结束流程，不自动重发。
-- 像素动画按运行状态切换，尚未细分具体读文件、编辑或测试工具动作。
-- 搜索覆盖标题与预览，暂不全文检索。
+## Credits
 
-## 技术与来源
-
-React、TypeScript、React Flow、CodeMirror 和 Fastify；通过原生协议连接 Codex 与 OpenCode。
-
-输入组件、RPC 结构、配色与像素资源的来源及许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。第三方角色资源同时保留来源清单与许可文件。
+SessionWeave uses work from **OpenChamber**, **Harnss**, **React Flow**, **Sage Paper Light**, and **Pixel Agents**, with character sprites credited to **JIK-A-4 / MetroCity**. Source snapshots and third-party license texts are preserved in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md); sprite provenance is in [public/pixel/characters/sources.json](public/pixel/characters/sources.json).

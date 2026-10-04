@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="310" viewBox="0 0 880 310" role="img" aria-labelledby="title desc">
+  <title id="title">Two native sessions, three execution steps</title>
+  <desc id="desc">OpenCode session A performs A1, Codex session B reviews its final output, and the same OpenCode session A performs A3 using B's final output. A1 and A3 share native conversation context.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#206B5C"/></marker></defs>
+  <rect width="880" height="310" rx="18" fill="#F6F5E9"/>
+  <g font-family="Arial, sans-serif">
+    <text x="36" y="38" fill="#52665A" font-size="12" letter-spacing="2">2 NATIVE SESSIONS / 3 EXECUTION STEPS</text>
+    <g fill="#FFFDF4" stroke="#CFD8CA"><rect x="36" y="67" width="220" height="137" rx="12"/><rect x="330" y="67" width="220" height="137" rx="12"/><rect x="624" y="67" width="220" height="137" rx="12"/></g>
+    <g fill="#206B5C" font-size="12"><text x="56" y="94">OPENCODE · SESSION A</text><text x="350" y="94">CODEX · SESSION B</text><text x="644" y="94">OPENCODE · SAME SESSION A</text></g>
+    <g fill="#243A30" font-size="24" font-weight="700"><text x="56" y="131">A1 · Research</text><text x="350" y="131">B · Review</text><text x="644" y="131">A3 · Revise</text></g>
+    <g fill="#52665A" font-size="14"><text x="56" y="159">Start from native context.</text><text x="350" y="159">Read A1's final output.</text><text x="644" y="159">Continue A's conversation.</text><text x="56" y="183">Produce an initial answer.</text><text x="350" y="183">Return review feedback.</text><text x="644" y="183">Use B's review feedback.</text></g>
+    <g stroke="#206B5C" stroke-width="2" fill="none" marker-end="url(#arrow)"><path d="M256 136H326"/><path d="M550 136H620"/></g>
+    <g fill="#52665A" font-family="monospace" font-size="10" text-anchor="middle"><text x="293" y="120">A1.output</text><text x="587" y="120">B.output</text></g>
+    <path d="M146 216v17q0 10 10 10h568q10 0 10-10v-17" fill="none" stroke="#8BA794" stroke-width="2" stroke-dasharray="5 5"/>
+    <text x="440" y="267" text-anchor="middle" fill="#206B5C" font-size="14">A1 and A3 reuse the same native conversation context.</text>
+    <text x="440" y="290" text-anchor="middle" fill="#52665A" font-size="12">Solid arrows pass final outputs. Dashed line marks shared session identity.</text>
+  </g>
+</svg>
