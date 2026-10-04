@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>待办清单</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <h1 class="app__title">待办清单</h1>
+
+    <form class="composer" id="add-form" autocomplete="off">
+      <label class="visually-hidden" for="task-input">任务内容</label>
+      <input
+        class="composer__input"
+        id="task-input"
+        name="task"
+        type="text"
+        placeholder="今天要做点什么？"
+        maxlength="200">
+      <button class="composer__button" type="submit">添加</button>
+    </form>
+
+    <p class="notice" id="notice" role="status" aria-live="polite" hidden></p>
+
+    <nav class="filters" id="filters" aria-label="筛选任务">
+      <button class="filters__item is-active" type="button" data-filter="all">全部</button>
+      <button class="filters__item" type="button" data-filter="active">未完成</button>
+      <button class="filters__item" type="button" data-filter="done">已完成</button>
+    </nav>
+
+    <ul class="list" id="task-list"></ul>
+
+    <p class="empty" id="empty-state" hidden>这里还没有任务。</p>
+
+    <footer class="footer">
+      <span id="counter">0 项未完成</span>
+      <button class="footer__clear" type="button" id="clear-done">清除已完成</button>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

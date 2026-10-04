@@ -1,9 +1,6 @@
 node_modules/
 dist/
-coverage/
+.sessionweave/
 .env
-.env.*
 *.log
-*.sqlite
-*.sqlite3
-.DS_Store
+test-results/
