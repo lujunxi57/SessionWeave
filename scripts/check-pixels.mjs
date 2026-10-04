@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+
+const artifactDir = process.env.ARTIFACT_DIR ? path.resolve(process.env.ARTIFACT_DIR) : undefined;
 
 // Browser fixtures exercise the production UI without submitting real Harness
 // jobs, changing native models, or overwriting the user's saved workflow.
@@ -116,8 +119,10 @@ try {
   await settleMovement();
   checks.push('A1 → B → A3 为两个员工，A 返回新工位且外观一致');
   await fit();
-  await mkdir('docs/evidence', { recursive: true });
-  await page.screenshot({ path: 'docs/evidence/像素员工运行中.png' });
+  if (artifactDir) {
+    await mkdir(artifactDir, { recursive: true });
+    await page.screenshot({ path: path.join(artifactDir, 'pixel-running.png') });
+  }
   await employeeA().click();
   assert.ok((await page.locator('.step-card.selected .step-id').innerText()).includes('A3'));
   await page.getByLabel('关闭详情', { exact: true }).click();
@@ -157,6 +162,6 @@ try {
   assert.equal(unmatchedApi, 0); assert.equal(fixtureRunPosts, 1); assert.deepEqual(errors, []);
   const report = { passed: true, mode: 'browser fixtures; no native Harness jobs or model writes', checks, fixtureRunPosts,
     realBusinessDispatches: 0, unmatchedApi, pageErrors: errors };
-  await writeFile('docs/evidence/像素员工验收.json', JSON.stringify(report, null, 2) + '\n');
+  if (artifactDir) await writeFile(path.join(artifactDir, 'pixel-check.json'), JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify(report, null, 2));
 } finally { await browser.close(); }

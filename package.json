@@ -8,7 +8,8 @@
     "build": "node scripts/launch.mjs build",
     "start": "node scripts/launch.mjs start",
     "check": "node scripts/launch.mjs check",
-    "test": "node scripts/launch.mjs test"
+    "test": "node scripts/launch.mjs test",
+    "test:browser": "node scripts/check-pixels.mjs"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.0",

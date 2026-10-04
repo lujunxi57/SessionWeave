@@ -1,6 +1,35 @@
+# Dependencies and generated bundles
 node_modules/
 dist/
+.vite/
+.cache/
+*.tsbuildinfo
+
+# Local runtime, credentials, and environment
 .sessionweave/
 .env
+.env.*
+!.env.example
+!.env.sample
+*.local
 *.log
+*.pid
+
+# Test artifacts
 test-results/
+playwright-report/
+coverage/
+artifacts/
+
+# Local research, conversations, and generated task output
+/docs/
+/exa-results/
+/demo/
+/ChatGPT对话记录-*.md
+/检索多Harness编排项目-*.md
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
