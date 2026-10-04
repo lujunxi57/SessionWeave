@@ -1,0 +1,49 @@
+{
+  "snapshot": "3537e140c2094761beae748592aeb92ece8edfdd",
+  "repository": "https://github.com/pixel-agents-hq/pixel-agents",
+  "originalCharacters": "https://jik-a-4.itch.io/metrocity-free-topdown-character-pack",
+  "assets": [
+    {
+      "file": "char_0.png",
+      "source": "https://raw.githubusercontent.com/pixel-agents-hq/pixel-agents/3537e140c2094761beae748592aeb92ece8edfdd/webview-ui/public/assets/characters/char_0.png",
+      "sha256": "9ece93c20765abb876e3dacfe01e0cd1801323eff41c1779be0c47369886c09a",
+      "width": 112,
+      "height": 96
+    },
+    {
+      "file": "char_1.png",
+      "source": "https://raw.githubusercontent.com/pixel-agents-hq/pixel-agents/3537e140c2094761beae748592aeb92ece8edfdd/webview-ui/public/assets/characters/char_1.png",
+      "sha256": "f935f033726b06f73dbbe590db5a23cfb20d2d02c1329fd5d67d57a262e9b05e",
+      "width": 112,
+      "height": 96
+    },
+    {
+      "file": "char_2.png",
+      "source": "https://raw.githubusercontent.com/pixel-agents-hq/pixel-agents/3537e140c2094761beae748592aeb92ece8edfdd/webview-ui/public/assets/characters/char_2.png",
+      "sha256": "9f63ee7be4577e1d60de3b64d198d387d1c09794bed3a608958e77c7b955575d",
+      "width": 112,
+      "height": 96
+    },
+    {
+      "file": "char_3.png",
+      "source": "https://raw.githubusercontent.com/pixel-agents-hq/pixel-agents/3537e140c2094761beae748592aeb92ece8edfdd/webview-ui/public/assets/characters/char_3.png",
+      "sha256": "ee5ebe0847471e4834e367f8a4108e6caf2f402ed506bbfebd90c64a43a79348",
+      "width": 112,
+      "height": 96
+    },
+    {
+      "file": "char_4.png",
+      "source": "https://raw.githubusercontent.com/pixel-agents-hq/pixel-agents/3537e140c2094761beae748592aeb92ece8edfdd/webview-ui/public/assets/characters/char_4.png",
+      "sha256": "fcf72626bbee3045d0f3e10bb87a41dab19a331d1affdfc53b483567f9c083aa",
+      "width": 112,
+      "height": 96
+    },
+    {
+      "file": "char_5.png",
+      "source": "https://raw.githubusercontent.com/pixel-agents-hq/pixel-agents/3537e140c2094761beae748592aeb92ece8edfdd/webview-ui/public/assets/characters/char_5.png",
+      "sha256": "4b2c639a50e089a4e3b87be440ffb52b5c5c8cfd6473a386f325b25f99db7381",
+      "width": 112,
+      "height": 96
+    }
+  ]
+}
