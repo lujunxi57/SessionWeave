@@ -13,9 +13,9 @@
   <a href="#核心机制">核心机制</a> · <a href="#快速开始">快速开始</a> · <a href="#当前边界与数据流">当前边界</a>
 </p>
 
-![SessionWeave 桌面网页实拍：原生会话列表、三步编排画布与自然语言计划面板](.github/assets/workbench.jpg)
+![SessionWeave 桌面网页实拍：原生会话列表、三步编排画布与自然语言计划面板](.github/assets/workbench.png)
 
-<p align="center"><sub>直接截取自运行中的网页。展示流程处于等待运行状态，像素工位显示就绪状态。</sub></p>
+<p align="center"><sub>桌面网页实拍：A、B 两条分支汇合到 C 审查步骤。展示流程处于等待运行状态，像素工位显示就绪状态。</sub></p>
 
 ## 核心机制
 

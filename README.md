@@ -13,9 +13,9 @@
   <a href="#core-mechanics">How it works</a> · <a href="#quick-start">Quick start</a> · <a href="#current-limits-and-data-flow">Current limits</a>
 </p>
 
-![SessionWeave live desktop workbench: native sessions, a three-step canvas, and the planning panel](.github/assets/workbench.jpg)
+![SessionWeave live desktop workbench: native sessions, a three-step canvas, and the planning panel](.github/assets/workbench.png)
 
-<p align="center"><sub>Captured directly from the running web app. This prepared workflow is waiting to run; its workstation graphics show the ready state.</sub></p>
+<p align="center"><sub>Captured from the live desktop app: parallel A/B branches feed a review step C. The prepared workflow is waiting to run; its workstations show the ready state.</sub></p>
 
 ## Core mechanics
 
